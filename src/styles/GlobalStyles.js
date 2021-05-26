@@ -30,6 +30,7 @@ export default createGlobalStyle`
     border-radius: 4px;
     font-weight: 700;
     transition: all 300ms;
+    margin-top: 15px;
   }
 
   button:hover {
