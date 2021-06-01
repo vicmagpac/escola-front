@@ -14,6 +14,8 @@ export default function (state = initialState, action) {
       console.log('REDUCER', action.payload);
       const newState = { ...state };
       newState.isLoggedIn = true;
+      newState.token = action.payload.token;
+      newState.user = action.payload.user;
       return newState;
     }
     case types.LOGIN_FAILURE: {
