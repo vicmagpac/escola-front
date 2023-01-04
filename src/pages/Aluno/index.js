@@ -3,12 +3,14 @@ import { get } from 'lodash';
 import { isEmail, isInt } from 'validator';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import { FaEdit, FaUserCircle } from 'react-icons/fa';
 
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as actions from '../../store/modules/auth/actions';
 
 import { Container } from '../../styles/GlobalStyles';
-import { Form } from './styled';
+import { Form, ProfilePicture } from './styled';
 import Loading from '../../components/Loading';
 import axios from '../../services/axios';
 import history from '../../services/history';
@@ -16,10 +18,11 @@ import history from '../../services/history';
 export default function Aluno({ match }) {
   const dispach = useDispatch();
 
-  const id = get(match, 'params.id', 0);
+  const id = get(match, 'params.id', '');
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [idade, setIdade] = useState('');
+  const [foto, setFoto] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -32,10 +35,10 @@ export default function Aluno({ match }) {
         setIsLoading(true);
         const { data } = await axios.get(`/alunos/${id}`);
         const foto = get(data, 'Fotos[0].url', '');
-        console.log(data);
         setNome(data.nome);
         setEmail(data.email);
         setIdade(data.idade);
+        setFoto(foto);
 
         setIsLoading(false);
       } catch (err) {
@@ -120,6 +123,14 @@ export default function Aluno({ match }) {
       <Loading isLoading={isLoading} />
       <h1>{id ? 'Editar aluno' : 'Novo aluno'}</h1>
 
+      {id && (
+        <ProfilePicture>
+          {foto ? <img src={foto} alt={nome} /> : <FaUserCircle size={180} />}
+          <Link to={`/fotos/${id}`}>
+            <FaEdit />
+          </Link>
+        </ProfilePicture>
+      )}
       <Form onSubmit={handleSubmit}>
         <input
           type="text"
