@@ -10,7 +10,8 @@ import { Link } from 'react-router-dom';
 import * as actions from '../../store/modules/auth/actions';
 
 import { Container } from '../../styles/GlobalStyles';
-import { Form, ProfilePicture } from './styled';
+// eslint-disable-next-line import/named
+import { Form, ProfilePicture, Title } from './styled';
 import Loading from '../../components/Loading';
 import axios from '../../services/axios';
 import history from '../../services/history';
@@ -121,7 +122,7 @@ export default function Aluno({ match }) {
   return (
     <Container>
       <Loading isLoading={isLoading} />
-      <h1>{id ? 'Editar aluno' : 'Novo aluno'}</h1>
+      <Title>{id ? 'Editar aluno' : 'Novo aluno'}</Title>
 
       {id && (
         <ProfilePicture>
